@@ -1,0 +1,19 @@
+.labels{
+    color: darkblue;
+    font-weight: bold;
+
+}
+.input-row{
+    background:lightgrey;
+}
+.labels-center{
+    color: white;
+    font-weight: bold;
+    text-align: center;
+
+}
+
+.input-div{
+    background: lightseagreen;
+    padding-bottom: 10px;
+}
