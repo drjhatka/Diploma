@@ -227,6 +227,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Syllabus' => App\Models\Syllabus::class,
+        'BackendHelper' => App\Http\Controllers\BackendHelper::class,
+
 
     ],
 

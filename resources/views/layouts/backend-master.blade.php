@@ -7,8 +7,11 @@
             <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.css'/>
             <link rel="stylesheet" href="{{ asset('css/common-style.css') }}">
             <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.css'/>
+            <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.css'/>
+
             <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js'></script>
             <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.js'></script>
+            <script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.js'></script>
         <title>@yield('title')</title>
     </head>
 

@@ -14,15 +14,17 @@ use App\Http\Controllers\BackendController;
 |
 */
 
-Route::get('/', function () {
-    return view('backend.syllabus-home');
-});
 
-Route::get('/backend/syllabus-manage', function(){
-    return view('backend.syllabus-home');
-})->name('syllabus.manage');
+//-------------------FRONTEND ROUTES----------------------//
 
-Route::post('/backend/syllabus/add','App\Http\Controllers\BackendController@syllabus_add')->name('syllabus.add');
+//-------------------BACKEND ROUTES----------------------//
+        //--dashboard--//
+Route::get('/dashboard','BackendController@dashboard')->name('backend.dashboard');
+Route::get('/dashboard/syllabus-add','BackendController@add_syllabus')->name('add.syllabus');
+Route::get('/dashboard/add-tutorial', 'BackendController@add_tutorial')->name('add.tutorial');
+Route::post('/dashboard/syllabus-post','BackendController@post_syllabus')->name('store.syllabus');
+Route::post('/dashboard/tutorial-post','BackendController@post_tutorial')->name('store.tutorial');
 
-Route::get('/backend/tutorial/add','App\Http\Controllers\BackendController@tutorial_add_home')->name('tutorial.add');
-Route::post('/backend/tutorial/add','App\Http\Controllers\BackendController@tutorial_add_home')->name('tutorial.post');
+//----------------json routes-----------------//
+Route::get('/syllabus-topics','BackendController@get_syllabus');
+

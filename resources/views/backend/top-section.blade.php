@@ -1,33 +1,29 @@
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
-    <a class="navbar-brand" href="#">Home</a>
+    <a class="navbar-brand" href="{{ route('backend.dashboard') }}">Home</a>
     <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavId">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Syllabus <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="dropdownId" 
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Syllabus</a>
-
+                <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Manage Syllabus</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownId">
-                            <a class="dropdown-item" href="{{ route('syllabus.manage') }}">Manage</a>
+                            <a class="dropdown-item" href="{{ route('add.syllabus') }}"> <i class="fas fa-plus-circle"></i>    Add</a>
+                            <a class="dropdown-item" href=""> <i class="fas fa-edit"></i>           Edit</a>
+                            <a class="dropdown-item" href=""> <i class="fas fa-minus-circle"></i>   Delete</a>
                         </div>
             </li>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="dropdownId" 
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tutorial</a>
+                <a class="nav-link dropdown-toggle" href="#" id="dropdownId"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Manage Tutorial</a>
 
                         <div class="dropdown-menu" aria-labelledby="dropdownId">
-                            <a class="dropdown-item" href="{{ route('tutorial.add') }}">Add</a>
+                            <a class="dropdown-item" href="">   Add         </a>
+                            <a class="dropdown-item" href="">   Edit        </a>
+                            <a class="dropdown-item" href="">   Delete      </a>
                         </div>
             </li>
 

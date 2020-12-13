@@ -1,15 +1,29 @@
 @extends('layouts.backend-master')
 
 @section('content')
+{{-- validaton error display --}}
+
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
+
+{{-- title --}}
+    <div class="col-md-12 card bg-info mt-2 text-center" style="color: white" >
+        <h4>Add Syllabus Topic</h4>
+    </div>
     <div class="col-md-12 mt-4 card py-2" >
 
-        @php
-            $syllabus = Syllabus::paginate(10);
-        @endphp
 
+        {!! Form::open(['route'=>'store.syllabus', 'class'=>' card py-2 px-2',
+                                            'style'=>'background-color:lightgreen']) !!}
 
-        {!! Form::open(['route'=>'syllabus.add', 'class'=>' card py-2 px-2', 'style'=>'background-color:lightgreen']) !!}
-        
         <div class="row">
             <div class="col-md-2 text-right">
                 <div class="form-group">
@@ -19,7 +33,8 @@
 
             <div class="col-md-4">
                 <div class="form-group ">
-                    {!! Form::select('subject', ['eco'=>'Economics & BD','acct'=>'Accounting'], 'eco',['class'=>'form-control']) !!}
+                    {!! Form::select('subject', ['eco'=>'Economics & BD','acct'=>'Accounting','bc'=>'Business Communication',
+                                    'mkt'=>'Marketing','law'=>'Banking Law & Practice','om'=>'Organizational Management'], 'eco',['class'=>'form-control']) !!}
                 </div>
             </div>
         </div>{{-- end row --}}
@@ -52,7 +67,7 @@
                         foreach (range('A','Z') as $key => $value) {
                             $module_array[$value]=$value;
                         }
-                        
+
                     @endphp
                     {!! Form::select('module', $module_array, 'A', ['class'=>'form-control']) !!}
                 </div>
@@ -69,35 +84,17 @@
         </div>
 
 
-        
+
         {!! Form::close() !!}
 
         {{-- syllabus view --}}
 
+        @if (session()->has('success'))
+        <script>
+            alert('<?php echo(session()->get("success")); ?>');
+        </script>
+        @endif
+
     </div>
 
-    <div class="col-md-12 card mt-3 py-2 px-2">
-        <table class="table table-dark table-bordered table-striped">
-            <tbody>
-                <th>Subject</th>
-                <th>Topic</th>
-                <th>Module</th>
-
-                @php
-                    if ($syllabus!=null) {
-                        foreach ($syllabus as $topic) {
-                            echo "<tr>".
-                                "<td>".$topic->subject."</td>".
-                                "<td>".$topic->topic."</td>".
-                                "<td>".$topic->module."</td>".
-
-                                "</tr>";
-                        }
-                    }
-                @endphp
-                    
-
-            </tbody>
-        </table>
-    </div>
 @endsection
