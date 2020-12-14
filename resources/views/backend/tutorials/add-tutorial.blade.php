@@ -45,12 +45,29 @@
             <h5 class="card-header">Add tutorials</h5>
         </div>
 
-        {!! Form::open(['route'=>'store.tutorial', 'class'=>'col-md-12']) !!}
+        {!! Form::open(['route'=>'store.tutorial', 'class'=>'col-md-12', 'files'=>true]) !!}
             <div class="col-md-12 mt-3">
                     <div class="form-group col-md-12 card input-div">
                         {!! Form::label('title', 'Title', ['class'=>'labels-center']) !!}
                         {!! Form::text('title', '', ['class'=>'form-control','placeholder'=>'Add title here (maximum 50 words)']) !!}
                     </div>
+            </div>
+
+
+            {{-- lfm standalone button --}}
+            <div class="col-md-12">
+              
+              <div class="input-group">
+              {!! Form::label('thumbnail', 'Add Post Image', ['class'=>'labels-center mr-3','style'=>'color:red']) !!}
+                <span class="input-group-btn">
+                  <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
+                    <i class="fa fa-picture-o"></i> Choose
+                  </a>
+                </span>
+                <input id="thumbnail" class="form-control" type="text" name="filepath">
+              </div>
+              {{-- image preview --}}
+              <div id="holder" class="img-thumbnail text-center mb-2" style="margin-top:15px;max-height:200px;"></div>
             </div>
 
         <div class="col-md-12">
@@ -148,7 +165,28 @@
                 
                 
                     $('.modal').modal('hide')
+
+                    
             })
         })
     </script>
+     
+     <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
+
+    <script>
+          
+        CKEDITOR.replace('content',{
+            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+          filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+          filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+          filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+        });
+
+        //lfm standalone
+       // $('#lfm').filemanager('image');
+        var route_prefix = "/laravel-filemanager";
+        $('#lfm').filemanager('image', {prefix: route_prefix});
+    </script>
+    
+      
 @endsection

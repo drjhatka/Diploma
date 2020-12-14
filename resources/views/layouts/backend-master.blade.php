@@ -12,6 +12,7 @@
             <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js'></script>
             <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.js'></script>
             <script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.js'></script>
+            <script src="{{ asset('ckeditor/ckeditor.js')}}"></script>
         <title>@yield('title')</title>
     </head>
 

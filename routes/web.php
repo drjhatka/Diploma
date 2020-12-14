@@ -28,3 +28,6 @@ Route::post('/dashboard/tutorial-post','BackendController@post_tutorial')->name(
 //----------------json routes-----------------//
 Route::get('/syllabus-topics','BackendController@get_syllabus');
 
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
+        \UniSharp\LaravelFilemanager\Lfm::routes();
+    });

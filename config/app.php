@@ -161,6 +161,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        
 
         /*
          * Package Service Providers...
@@ -174,6 +175,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        UniSharp\LaravelFilemanager\LaravelFilemanagerServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
     ],
 
@@ -228,6 +231,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Syllabus' => App\Models\Syllabus::class,
         'BackendHelper' => App\Http\Controllers\BackendHelper::class,
+        'Image' => Intervention\Image\Facades\Image::class,
 
 
     ],
