@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Syllabus;
+use App\Models\Tutorial;
 use Illuminate\Http\Request;
 
 class BackendController extends Controller
@@ -41,21 +42,48 @@ class BackendController extends Controller
     }//end method
 
     public function post_tutorial(Request $request){
-        dd($request->all());
+        //dd($request->all());
         $rules =[
-            'title'=>'',
-            'short_description'=>'',
-            'content'=>'',
-            'paper'=>'',
-            'syllabus_topic'=>''
+            'title'=>'required|max:300',
+            'thumbnail'=>'required',
+            'short_description'=>'required',
+            'content'=>'required',
+            'paper'=>'required',
+            'syllabus_topic'=>'required'
 
         ];
+        $resource_array = array();
+        if($request->resource_type!=null AND $request->resource_link !=null){
+            foreach ($request->resource_type as $key => $value) {
+                $resource_array [] =[$value,$request->resource_link[$key]]; 
+            }
+        }//end if
+
+        //add tutorial
+        $tutorial = new Tutorial();
+        $tutorial->title = $request->title;
+        $tutorial->short_description = $request->short_description ? $request->short_description:null;
+        $tutorial->content_bangla = $request->content;
+        $tutorial->paper = $request->paper;
+
+        //create syllabus
+        //$syllabus = 
+
+        //create resource (if any)
+        
+
+
     }//end method
 
     //-------------JSON Methods-------------//
-    public function get_syllabus(){
+    public function get_syllabus_modules(){
         $syllabus = Syllabus::all();
-        return BackendHelper::categorize_syllabus_topic($syllabus);
+        return BackendHelper::categorize_syllabus_module($syllabus);
+    }
+
+    public function get_syllabus_module_topics($subject,$module){
+        $syllabus = Syllabus::all();
+        return BackendHelper::extract_syllabus_topic($subject,$module);
     }
 
 }

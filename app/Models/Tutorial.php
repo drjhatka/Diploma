@@ -9,16 +9,22 @@ class Tutorial extends Model
 {
     use HasFactory;
 
-    public function images()
+    
+    public function syllabus()
     {
-        return $this->hasMany('App\Models\Image', 'foreign_key', 'local_key');
+        return $this->belongsTo('App\Models\Syllabus');
+    }
+    
+    public function images(){
+        return $this->hasMany('App\Models\Image');
     }
 
     
-    public function resources()
-    {
-        return $this->hasMany('App\Models\Resource', 'foreign_key', 'local_key');
+    public function resources(){
+        return $this->hasMany('App\Models\Resource');
     }
+
+
 
     
 }

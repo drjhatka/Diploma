@@ -39,7 +39,7 @@
 {{-- here is hidden modal for resource adding --}}
 
 
-    <div class="row input-row">
+    <div class="row input-row" >
 
         <div class="col-md-12 mt-2">
             <h5 class="card-header">Add tutorials</h5>
@@ -97,10 +97,18 @@
 
 
         <div class="col-md-12 py-3  mt-3 mb-3" style="border-bottom: 5px solid red; ">
-            {!! Form::label('syllabus_topic', 'Syllabus Topic', ['class'=>'labels text-center']) !!}
+            {!! Form::label('syllabus_module', 'Syllabus Module', ['class'=>'labels text-center']) !!}
 
-            {!! Form::select('syllabus_topic', [BackendHelper::categorize_syllabus_topic(Syllabus::all())['eco']], true,['class'=>'form-control col-md-5 offset-md-4','id'=>'syllabus-topic']) !!}
+            {!! Form::select('syllabus_module', [BackendHelper::categorize_syllabus_module(Syllabus::select('module')->distinct()->get())], true,['class'=>'form-control col-md-5 offset-md-4','id'=>'syllabus_module']) !!}
         </div>
+
+
+        {{-- syllabus topic select --}}
+        <div class="col-md-12 py-3  mt-3 mb-3" style="border-bottom: 5px solid red; ">
+          {!! Form::label('syllabus_module_topic', 'Syllabus Topic Details', ['class'=>'labels text-center']) !!}
+
+          {!! Form::select('syllabus_module_topic', [], true,['class'=>'form-control col-md-5 offset-md-4','id'=>'syllabus_module_topic']) !!}
+      </div>
 
         <div class="col-md-12 card  py-2">
             <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Add Resource</button>
@@ -125,29 +133,76 @@
             $('#subject').change(function(){
                 $.ajax({
                     type: "get",
-                    url: "/syllabus-topics",
+                    url: "/syllabus_modules",
                     data: $('#subject').val(),
                     //dataType: "dataType",
                     success: function (response) {
                         var keys = Object.keys(response);
                         var values = Object.values(response);
                         //console.log(response) 
-                        var syllabus_topic = null;
+                        var syllabus_module = null;
                         for (let [key, value] of Object.entries(response)) {
                             if(key === $('#subject').val()){
-                                   syllabus_topic = value;
+                                   syllabus_module = value;
                                     break;
                                 }
                             }
                         
-                       $("#syllabus-topic").empty()
-                        $.each(syllabus_topic, function(key,value) {
-                            $("#syllabus-topic").append($("<option></option>")
+                       $("#syllabus_module").empty()
+                        $.each(syllabus_module, function(key,value) {
+                            $("#syllabus_module").append($("<option></option>")
                             .attr("value", value).text(value));
                         });
                     }
                 });
             })
+
+            $.ajax({
+              type: "get",
+              url: "/syllabus_module_topics/"+$("#subject").val()+"/"+$("#syllabus_module").val(),
+              //data: [$('#subject').val(),$('#syllabus_module').val()],
+              //dataType: "dataType",
+              success: function (response) {
+                console.log(response);
+                  var keys = Object.keys(response);
+                  var values = Object.values(response);
+                  var syllabus_module_topics = response;
+                console.log(syllabus_module_topics);
+                  
+                 //$("#syllabus_module").empty()
+                  $.each(syllabus_module_topics, function(key,value) {
+                      $("#syllabus_module_topic").append($("<option></option>")
+                      .attr("value", key).text(value));
+                  });
+              }
+          });
+
+
+          $('#syllabus_module').change(function(){
+            $.ajax({
+                type: "get",
+                url: "/syllabus_module_topics/"+$("#subject").val()+"/"+$("#syllabus_module").val(),
+                //data: $('#subject').val(),
+                //dataType: "dataType",
+                success: function (response) {
+                    var keys = Object.keys(response);
+                    var values = Object.values(response);
+                    //console.log(response) 
+                    var syllabus_module = $("#syllabus_module_topic");
+                  
+                    
+                   $("#syllabus_module_topic").empty()
+                    $.each(syllabus_module, function(key,value) {
+                        $("#syllabus_module_topic").append($("<option></option>")
+                        .attr("value", value).text(value));
+                    });
+                }
+            });
+        })
+            //$module_topic = $("#syllabus_module_topic")
+            //$each(result, function(item){
+              //$module_topic.append('<option value="'+)
+            //})
 
             $("#resource").click(function (e) {
                 e.preventDefault()
@@ -188,5 +243,6 @@
         $('#lfm').filemanager('image', {prefix: route_prefix});
     </script>
     
-      
+    
+
 @endsection

@@ -4,15 +4,16 @@
 
 }
 .input-row{
+    background-color: rgb(166, 233, 181);
 }
 .labels-center{
-    color: white;
+    color: red;
     font-weight: bold;
     text-align: center;
 
 }
 
 .input-div{
-    background: lightseagreen;
-    padding-bottom: 10px;
+    background: rgb(181, 211, 171);
+    padding-bottom: 20px;
 }
