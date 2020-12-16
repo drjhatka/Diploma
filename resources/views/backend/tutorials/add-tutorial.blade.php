@@ -198,10 +198,7 @@
                     }
                   });
         })).trigger('change')
-            //$module_topic = $("#syllabus_module_topic")
-            //$each(result, function(item){
-              //$module_topic.append('<option value="'+)
-            //})
+            
 
             $("#resource").click(function (e) {
                 e.preventDefault()
