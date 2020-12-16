@@ -26,7 +26,6 @@ class BackendHelper extends Controller
         $syllabus = Syllabus::all(); 
         $return_array = array();
         foreach ($syllabus as $key => $fields) {
-            //dd($fields);
             if($subject === $fields->subject AND $module === $fields->module){
                 $return_array[$fields->id][]=$fields->topic;
 

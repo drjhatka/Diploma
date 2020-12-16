@@ -82,7 +82,6 @@ class BackendController extends Controller
     }
 
     public function get_syllabus_module_topics($subject,$module){
-        $syllabus = Syllabus::all();
         return BackendHelper::extract_syllabus_topic($subject,$module);
     }
 

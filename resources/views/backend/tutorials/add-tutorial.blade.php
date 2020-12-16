@@ -99,7 +99,7 @@
         <div class="col-md-12 py-3  mt-3 mb-3" style="border-bottom: 5px solid red; ">
             {!! Form::label('syllabus_module', 'Syllabus Module', ['class'=>'labels text-center']) !!}
 
-            {!! Form::select('syllabus_module', [BackendHelper::categorize_syllabus_module(Syllabus::select('module')->distinct()->get())], true,['class'=>'form-control col-md-5 offset-md-4','id'=>'syllabus_module']) !!}
+            {!! Form::select('syllabus_module', [BackendHelper::categorize_syllabus_module(Syllabus::all())['eco']], true,['class'=>'form-control col-md-5 offset-md-4','id'=>'syllabus_module']) !!}
         </div>
 
 
@@ -152,53 +152,52 @@
                         $.each(syllabus_module, function(key,value) {
                             $("#syllabus_module").append($("<option></option>")
                             .attr("value", value).text(value));
+                            $("#syllabus_module").trigger('change')
                         });
                     }
                 });
             })
-
+//set default value for syllabus topic
             $.ajax({
               type: "get",
-              url: "/syllabus_module_topics/"+$("#subject").val()+"/"+$("#syllabus_module").val(),
-              //data: [$('#subject').val(),$('#syllabus_module').val()],
-              //dataType: "dataType",
+              url: "/syllabus_module_topics/"+$("#subject").val()+"/"+$("#syllabus_module").val(), 
               success: function (response) {
-                console.log(response);
+                //console.log(response);
                   var keys = Object.keys(response);
                   var values = Object.values(response);
                   var syllabus_module_topics = response;
-                console.log(syllabus_module_topics);
-                  
-                 //$("#syllabus_module").empty()
                   $.each(syllabus_module_topics, function(key,value) {
                       $("#syllabus_module_topic").append($("<option></option>")
                       .attr("value", key).text(value));
                   });
               }
-          });
+          })
 
-
-          $('#syllabus_module').change(function(){
+//change event 
+          $('#syllabus_module').on('change',(function(){
             $.ajax({
                 type: "get",
                 url: "/syllabus_module_topics/"+$("#subject").val()+"/"+$("#syllabus_module").val(),
-                //data: $('#subject').val(),
-                //dataType: "dataType",
+                
                 success: function (response) {
                     var keys = Object.keys(response);
                     var values = Object.values(response);
                     //console.log(response) 
-                    var syllabus_module = $("#syllabus_module_topic");
+                    
+                    var syllabus_module_topic = response
+                    $("#syllabus_module_topic").empty()
                   
                     
-                   $("#syllabus_module_topic").empty()
-                    $.each(syllabus_module, function(key,value) {
+                    $.each(syllabus_module_topic, function(key,value) {
+                      console.log(value)
+//                      console.log(syllabus_module_topic)
                         $("#syllabus_module_topic").append($("<option></option>")
-                        .attr("value", value).text(value));
-                    });
-                }
-            });
-        })
+                        .attr("value", key).text(value));
+                        
+                      });
+                    }
+                  });
+        })).trigger('change')
             //$module_topic = $("#syllabus_module_topic")
             //$each(result, function(item){
               //$module_topic.append('<option value="'+)
