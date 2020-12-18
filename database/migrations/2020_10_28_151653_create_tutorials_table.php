@@ -17,14 +17,13 @@ class CreateTutorialsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->text('title');
+            $table->string('post_image');
             $table->text('short_description')->nullable();
             $table->text('content_bangla')->nullable();
             $table->text('content_english')->nullable();
             $table->unsignedBigInteger('syllabus_id');
             $table->string('paper');
-            
-
-            
+       
         });
     }
 

@@ -39,6 +39,7 @@
 {{-- here is hidden modal for resource adding --}}
 
 
+
     <div class="row input-row" >
 
         <div class="col-md-12 mt-2">
@@ -64,7 +65,7 @@
                     <i class="fa fa-picture-o"></i> Choose
                   </a>
                 </span>
-                <input id="thumbnail" class="form-control" type="text" name="filepath">
+                <input name="post_image" id="thumbnail" class="form-control" type="text" name="filepath">
               </div>
               {{-- image preview --}}
               <div id="holder" class="img-thumbnail text-center mb-2" style="margin-top:15px;max-height:200px;"></div>
@@ -88,7 +89,7 @@
             <div class="form-group col-md-12 input-div">
                 {!! Form::label('paper', 'Select Paper', ['class'=>'labels-center']) !!}
 
-                {!! Form::select('category', ['eco'=>'Economics','acct'=>'Accounting',
+                {!! Form::select('paper', ['eco'=>'Economics','acct'=>'Accounting',
                     'bc'=>'Business Communication','om'=>'Organizational Management',
                     'law'=>'Law & Practice of Banking', 'mkt'=>"Marketing"],
                     true,['class'=>'form-control','id'=>'subject']) !!}
@@ -126,6 +127,11 @@
 
         {!! Form::close() !!}
 
+        @if (session()->has('tutorial_add_success'))
+          <script>
+            alert("<?php echo session()->get('tutorial_add_success'); ?>");
+          </script>   
+        @endif
     </div>
 
     <script>

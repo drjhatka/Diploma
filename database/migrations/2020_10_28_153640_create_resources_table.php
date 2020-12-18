@@ -18,6 +18,8 @@ class CreateResourcesTable extends Migration
             $table->timestamps();
             $table->string('type');
             $table->string('link');
+            $table->unsignedBigInteger('resourceable_id');
+            $table->string('resourceable_type');
         });
     }
 

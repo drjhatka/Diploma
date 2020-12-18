@@ -21,7 +21,7 @@
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Manage Tutorial</a>
 
                         <div class="dropdown-menu" aria-labelledby="dropdownId">
-                            <a class="dropdown-item" href="">   Add         </a>
+                            <a class="dropdown-item" href="{{ route('add.tutorial') }}">   Add         </a>
                             <a class="dropdown-item" href="">   Edit        </a>
                             <a class="dropdown-item" href="">   Delete      </a>
                         </div>

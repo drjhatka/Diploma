@@ -42,7 +42,8 @@ class BackendController extends Controller
     }//end method
 
     public function post_tutorial(Request $request){
-        //dd($request->all());
+        //TODO: change request to Request service later     
+    //set rules for validation
         $rules =[
             'title'=>'required|max:300',
             'thumbnail'=>'required',
@@ -52,6 +53,8 @@ class BackendController extends Controller
             'syllabus_topic'=>'required'
 
         ];
+        
+    //check if there are any resources added
         $resource_array = array();
         if($request->resource_type!=null AND $request->resource_link !=null){
             foreach ($request->resource_type as $key => $value) {
@@ -59,20 +62,40 @@ class BackendController extends Controller
             }
         }//end if
 
-        //add tutorial
+    //add tutorial fields
         $tutorial = new Tutorial();
         $tutorial->title = $request->title;
-        $tutorial->short_description = $request->short_description ? $request->short_description:null;
-        $tutorial->content_bangla = $request->content;
+        $tutorial->short_description = $request->short_description!=null ? $request->short_description:null;
+        $tutorial->content_bangla = $request->content!=null?$request->content:null;
         $tutorial->paper = $request->paper;
-
-        //create syllabus
-        //$syllabus = 
-
-        //create resource (if any)
         
+    //create syllabus
+        $syllabus = Syllabus::find($request->syllabus_module_topic);
+    //associate syllabus with tutorial
+        $tutorial->syllabus()->associate($syllabus);
 
+    //save post image
+        $tutorial->post_image = $request->post_image;
+        $tutorial->save();
+    //save content images from tutorial 
+        $images = BackendHelper::extract_images_from_text($request->content);
+    //check if at least one image exists
+        if(count($images)>0){
+            foreach ($images as $key => $value) {
+                $tutorial->images()->create(['url'=>$images[$key],'imageable_id'=>$tutorial->id]);   
+            }//end foreach  
+        }//end if
 
+    //add resources if provided
+        if(count($resource_array)!=0){
+            foreach ($resource_array as $key => $value) {
+                $tutorial->resources()->create(['type'=>$request->resource_type[$key],
+                                                'link'=>$request->resource_link[$key],
+                                                'resourceable_id'=>$tutorial->id]);    
+            }//end foreach
+        }//end if
+    //return to the previous page with a success massage 
+        return redirect()->back()->with('tutorial_add_success','Tutorial added successfully!');
     }//end method
 
     //-------------JSON Methods-------------//

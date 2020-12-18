@@ -16,12 +16,13 @@ class Tutorial extends Model
     }
     
     public function images(){
-        return $this->hasMany('App\Models\Image');
+        return $this->morphMany(Image::class,'imageable');
     }
 
     
     public function resources(){
-        return $this->hasMany('App\Models\Resource');
+        return $this->morphMany(Resource::class,'resourceable');
+        
     }
 
 
