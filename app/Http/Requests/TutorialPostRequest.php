@@ -13,7 +13,7 @@ class TutorialPostRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,7 +25,7 @@ class TutorialPostRequest extends FormRequest
     {
         return [
                 'title'=>'required|max:300',
-                'thumbnail'=>'required',
+                'post_image'=>'required',
                 'short_description'=>'required',
                 'content'=>'required',
                 'paper'=>'required',

@@ -45,6 +45,15 @@ class BackendHelper extends Controller
         return $img_src_array;
     }//end method
 
-    
+    public static function get_subject_fullname($subject){
+        switch ($subject) {
+            case 'eco':
+                return "Principles of Economics";
+                
+                case 'acct':
+                    return "Accounting";
+                 
+        }//end switch
+    }//end method
 
 }//end class

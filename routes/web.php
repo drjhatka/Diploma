@@ -20,10 +20,25 @@ use App\Http\Controllers\BackendController;
 //-------------------BACKEND ROUTES----------------------//
         //--dashboard--//
 Route::get('/dashboard','BackendController@dashboard')->name('backend.dashboard');
+
+//----------------syllabus CRUD---------------------//
 Route::get('/dashboard/syllabus-add','BackendController@add_syllabus')->name('add.syllabus');
-Route::get('/dashboard/add-tutorial', 'BackendController@add_tutorial')->name('add.tutorial');
 Route::post('/dashboard/syllabus-post','BackendController@post_syllabus')->name('store.syllabus');
+
+//----------------tutorial CRUD---------------------//
+Route::get('/dashboard/add-tutorial', 'BackendController@add_tutorial')->name('add.tutorial');
 Route::post('/dashboard/tutorial-post','BackendController@post_tutorial')->name('store.tutorial');
+
+Route::get('/dashboard/manage-tutorial', 'BackendController@manage_tutorial')->name('manage.tutorial');
+Route::get('/dashboard/view-tutorial/{id}', 'BackendController@view_tutorial')->name('view.tutorial');
+
+Route::get('/dashboard/edit-tutorial/{id}', 'BackendController@edit_tutorial')->name('edit.tutorial');
+Route::post('/dashboard/update-tutorial','BackendController@update_tutorial')->name('update.tutorial');
+
+Route::get('/dashboard/delete-tutorial', 'BackendController@delete_tutorial')->name('delete.tutorial');
+
+
+
 
 //----------------json routes-----------------//
 Route::get('/syllabus_modules','BackendController@get_syllabus_modules');

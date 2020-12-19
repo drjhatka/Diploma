@@ -229,8 +229,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Syllabus' => App\Models\Syllabus::class,
         'BackendHelper' => App\Http\Controllers\BackendHelper::class,
+        'Syllabus' => App\Models\Syllabus::class,
+        'Tutorial' => App\Models\Tutorial::class,
         'Image' => Intervention\Image\Facades\Image::class,
 
 

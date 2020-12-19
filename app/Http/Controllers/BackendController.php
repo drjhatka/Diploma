@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TutorialPostRequest;
 use App\Models\Syllabus;
 use App\Models\Tutorial;
 use Illuminate\Http\Request;
@@ -96,6 +97,27 @@ class BackendController extends Controller
         }//end if
     //return to the previous page with a success massage 
         return redirect()->back()->with('tutorial_add_success','Tutorial added successfully!');
+    }//end method
+
+
+    public function manage_tutorial(){
+        return view('backend.tutorials.manage-tutorial');
+    }//end method
+
+    public function view_tutorial($id){
+        return view('backend.tutorials.view-tutorial')->with('id',$id);
+    }//end method
+
+    public function edit_tutorial($id){
+        return view('backend.tutorials.edit-tutorial')->with('id',$id);
+    }//end method
+
+    public function update_tutorial(TutorialPostRequest $request){
+        dd($request);
+    }//end method
+
+    public function delete_tutorial($id){
+
     }//end method
 
     //-------------JSON Methods-------------//

@@ -21,9 +21,9 @@
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Manage Tutorial</a>
 
                         <div class="dropdown-menu" aria-labelledby="dropdownId">
-                            <a class="dropdown-item" href="{{ route('add.tutorial') }}">   Add         </a>
-                            <a class="dropdown-item" href="">   Edit        </a>
-                            <a class="dropdown-item" href="">   Delete      </a>
+                            <a class="dropdown-item" href="{{ route('add.tutorial') }}"> <i class="fas fa-plus-square    "></i>  Add         </a>
+                            <a class="dropdown-item" href="{{ route('manage.tutorial') }}"> <i class="fas fa-wrench    "></i>  Edit        </a>
+                            <a class="dropdown-item" href="{{ route('delete.tutorial') }}"> <i class="fas fa-trash-alt    "></i>   Delete      </a>
                         </div>
             </li>
 
