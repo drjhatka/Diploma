@@ -24,12 +24,12 @@ class TutorialPostRequest extends FormRequest
     public function rules()
     {
         return [
-                'title'=>'required|max:300',
+                'title'=>'required|max:300|bail',
                 'post_image'=>'required',
                 'short_description'=>'required',
                 'content'=>'required',
                 'paper'=>'required',
-                'syllabus_topic'=>'required'
+                'syllabus_module_topic'=>'required'
         ];
     }
 }

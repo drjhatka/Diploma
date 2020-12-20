@@ -42,49 +42,38 @@ class BackendController extends Controller
         return view('backend.tutorials.add-tutorial');
     }//end method
 
-    public function post_tutorial(Request $request){
-        //TODO: change request to Request service later     
-    //set rules for validation
-        $rules =[
-            'title'=>'required|max:300',
-            'thumbnail'=>'required',
-            'short_description'=>'required',
-            'content'=>'required',
-            'paper'=>'required',
-            'syllabus_topic'=>'required'
-
-        ];
+    public function post_tutorial(TutorialPostRequest $request){
+    //add tutorial fields
+        $tutorial = new Tutorial();
+        $tutorial->title = $request->title;
+        $tutorial->post_image = $request->post_image;
+        $tutorial->short_description = $request->short_description!=null ? $request->short_description : null;
+        $tutorial->content_bangla = $request->content!=null ? $request->content : null;
+        $tutorial->paper = $request->paper;
         
+    //create syllabus association
+        $syllabus = Syllabus::find($request->syllabus_module_topic);
+        $tutorial->syllabus()->associate($syllabus);
+
+    //save tutorial to access its id further ahead for images & resources
+        $tutorial->save();
+
+    //extract & save images from tutorial's content text
+        $images = BackendHelper::extract_images_from_text($request->content);
+
+    //if there is one or more images save them to the database
+        if(count($images)>0){
+            foreach ($images as $key => $value) {
+                $tutorial->images()->create(['url'=>$images[$key],'imageable_id'=>$tutorial->id]);   
+            }//end foreach  
+        }//end if
+
     //check if there are any resources added
         $resource_array = array();
         if($request->resource_type!=null AND $request->resource_link !=null){
             foreach ($request->resource_type as $key => $value) {
                 $resource_array [] =[$value,$request->resource_link[$key]]; 
-            }
-        }//end if
-
-    //add tutorial fields
-        $tutorial = new Tutorial();
-        $tutorial->title = $request->title;
-        $tutorial->short_description = $request->short_description!=null ? $request->short_description:null;
-        $tutorial->content_bangla = $request->content!=null?$request->content:null;
-        $tutorial->paper = $request->paper;
-        
-    //create syllabus
-        $syllabus = Syllabus::find($request->syllabus_module_topic);
-    //associate syllabus with tutorial
-        $tutorial->syllabus()->associate($syllabus);
-
-    //save post image
-        $tutorial->post_image = $request->post_image;
-        $tutorial->save();
-    //save content images from tutorial 
-        $images = BackendHelper::extract_images_from_text($request->content);
-    //check if at least one image exists
-        if(count($images)>0){
-            foreach ($images as $key => $value) {
-                $tutorial->images()->create(['url'=>$images[$key],'imageable_id'=>$tutorial->id]);   
-            }//end foreach  
+            }//end foreach
         }//end if
 
     //add resources if provided
@@ -95,6 +84,7 @@ class BackendController extends Controller
                                                 'resourceable_id'=>$tutorial->id]);    
             }//end foreach
         }//end if
+
     //return to the previous page with a success massage 
         return redirect()->back()->with('tutorial_add_success','Tutorial added successfully!');
     }//end method
@@ -113,7 +103,57 @@ class BackendController extends Controller
     }//end method
 
     public function update_tutorial(TutorialPostRequest $request){
-        dd($request);
+    //validation is completed even before this method is called thanks to laravel's form request mechanism
+
+        // update all required tutorial fields
+            $tutorial = Tutorial::find($request->id);
+            $tutorial->title = $request->title;
+            $tutorial->post_image = $request->post_image;
+            $tutorial->short_description = $request->short_description!=null ? $request->short_description:null;
+            $tutorial->content_bangla = $request->content!=null?$request->content:null;
+            $tutorial->paper = $request->paper;
+
+        //update syllabus & delete previous association
+            $tutorial->syllabus()->delete();
+            $syllabus = Syllabus::find($request->syllabus_module_topic);
+        //associate new syllabus topic (even if it has NOT been changed)
+            $tutorial->syllabus()->associate($syllabus);
+        
+        //delete previous image relationships for content images
+            $tutorial->images()->delete();
+        //add new images relationship to this tutorial
+        //extract & save images from tutorial's content text
+            $images = BackendHelper::extract_images_from_text($request->content);
+
+        //if there is one or more images save them to the database
+            if(count($images)>0){
+                foreach ($images as $key => $value) {
+                    $tutorial->images()->create(['url'=>$images[$key],'imageable_id'=>$tutorial->id]);   
+                }//end foreach  
+            }//end if
+
+        //check if there are any resources added 
+            $resource_array = array();
+            if($request->resource_type!=null AND $request->resource_link !=null){
+                //delete all previous resource relations 
+                    $tutorial->resources()->delete();
+                foreach ($request->resource_type as $key => $value) {
+                    $resource_array [] =[$value,$request->resource_link[$key]]; 
+                }//end foreach
+            }//end if
+
+        //add new resource relations to database
+            if(count($resource_array)!=0){
+                foreach ($resource_array as $key => $value) {
+                    $tutorial->resources()->create(['type'=>$request->resource_type[$key],
+                                                    'link'=>$request->resource_link[$key],
+                                                    'resourceable_id'=>$tutorial->id]);    
+                }//end foreach
+            }//end if
+
+        //update all done!! now redirect back to the previous page with success massage
+            return redirect()->back()->with('tutorial_update_success','Tutorial added successfully!');
+
     }//end method
 
     public function delete_tutorial($id){

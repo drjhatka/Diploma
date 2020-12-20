@@ -7,6 +7,32 @@
 @php
     $tutorial = Tutorial::find($id);
 @endphp
+@if (!$errors->isEmpty())
+            <div class="alert alert-danger text-center alert-dismissible fade show" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                
+                <span class="sr-only">Close</span>
+              </button>
+              <strong>
+                  Behold!!! The following errors occured!!
+                </strong>
+
+            </div>
+            @foreach ($errors->all() as $item)
+
+              <div class="alert alert-danger fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  <span class="sr-only">Close</span>
+                </button>
+                <strong>
+                  {{ $item }}
+                  </strong>
+
+              </div>
+              @endforeach
+            @endif
+            
 {{-- here is hidden modal for resource adding --}}
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -43,18 +69,8 @@
   </div>
 </div>
 {{-- here is hidden modal for resource adding --}}
-@if ($errors->any())
-@foreach ($errors as $error)
-  <div class="alert alert-primary alert-dismissible fade show" role="alert">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-          <span class="sr-only">Close</span>
-      </button>
-      <strong>Holy guacamole!</strong> {{ $error }}
-  </div>  
-    
-@endforeach
-@endif
+
+
 
 
     <div class="row input-row" >
@@ -71,7 +87,7 @@
                     </div>
             </div>
 
-
+            
             {{-- lfm standalone button --}}
             <div class="col-md-12">
               
@@ -154,6 +170,7 @@
            
         </div>
 
+        {!! Form::hidden('id', $tutorial->id) !!}
         <div class="col-md-12 mt-2 text-center">
 
             {!! Form::submit('Update Tutorial', ['class'=>'btn-primary col-md-4 mr-2']) !!}
@@ -161,9 +178,9 @@
 
         {!! Form::close() !!}
 
-        @if (session()->has('tutorial_add_success'))
+        @if (session()->has('tutorial_update_success'))
           <script>
-            alert("<?php echo session()->get('tutorial_add_success'); ?>");
+            alert("<?php echo session()->get('tutorial_update_success'); ?>");
           </script>   
         @endif
 
