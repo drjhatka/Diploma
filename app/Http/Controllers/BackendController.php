@@ -152,7 +152,7 @@ class BackendController extends Controller
             }//end if
 
         //update all done!! now redirect back to the previous page with success massage
-            return redirect()->back()->with('tutorial_update_success','Tutorial added successfully!');
+            return redirect()->back()->with('tutorial_update_success','Tutorial Updated successfully!');
 
     }//end method
 
