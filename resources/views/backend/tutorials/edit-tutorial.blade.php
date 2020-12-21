@@ -73,19 +73,14 @@
 
 
     <div class="row input-row" >
-
         <div class="col-md-12 mt-2">
             <h5 class="card-header">Edit tutorial</h5>
         </div>
 
         {!! Form::open(['route'=>'update.tutorial', 'class'=>'col-md-12', 'files'=>true]) !!}
-            <div class="col-md-12 mt-3">
-                    <div class="form-group col-md-12 card input-div">
-                        {!! Form::label('title', 'Title', ['class'=>'labels-center']) !!}
-                        {!! Form::text('title', $tutorial->title, ['class'=>'form-control','placeholder'=>'Add title here (maximum 50 words)']) !!}
-                    </div>
-            </div>
-
+        @php
+          echo(HTMLGenerator::generate_form_text_block($tutorial->title,['title','Title',['class'=>'labels-center']],['title']));
+        @endphp
             
             {{-- lfm standalone button --}}
             <div class="col-md-12">
@@ -103,12 +98,10 @@
               <div id="holder" class="img-thumbnail text-center mb-2" style="margin-top:15px;max-height:200px;"><img width="200" height="100" src="{{ $tutorial->post_image }}" alt=""></div>
             </div>
 
-        <div class="col-md-12">
-            <div class="form-group col-md-12 card input-div">
-                {!! Form::label('short_description', 'Short Description', ['class'=>'labels-center']) !!}
-                {!! Form::textarea('short_description', $tutorial->short_description, ['class'=>'form-control','rows'=>3,'placeholder'=>'Add Description (Maximum 3 lines)']) !!}
-            </div>
-        </div>
+            @php
+              echo(HTMLGenerator::generate_form_textarea_block($tutorial->short_description,['short_description','Short Description',
+                                                          ['class'=>'labels-center']],['short_description']));
+            @endphp
 
         <div class="col-md-12">
             <div class="form-group col-md-12 card input-div">
