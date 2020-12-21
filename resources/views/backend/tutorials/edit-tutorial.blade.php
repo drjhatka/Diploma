@@ -72,7 +72,6 @@
 
 
 
-
     <div class="row input-row" >
 
         <div class="col-md-12 mt-2">
@@ -114,21 +113,18 @@
         <div class="col-md-12">
             <div class="form-group col-md-12 card input-div">
                 {!! Form::label('content', 'Content', ['class'=>'labels-center']) !!}
-                {!! Form::textarea('content', $tutorial->content_bangla, ['class'=>'form-control']) !!}
+                {!! Form::textarea('content', BackendHelper::insert_images_in_content($tutorial->content_bangla), ['class'=>'form-control']) !!}
             </div>
         </div>
-
+        
         <div class="col-md-12">
             <div class="form-group col-md-12 input-div">
                 {!! Form::label('paper', 'Select Paper', ['class'=>'labels-center']) !!}
 
-                {!! Form::select('paper', ['eco'=>'Economics','acct'=>'Accounting',
-                    'bc'=>'Business Communication','om'=>'Organizational Management',
-                    'law'=>'Law & Practice of Banking', 'mkt'=>"Marketing"],
+                {!! Form::select('paper', BackendHelper::get_form_subject_array(),
                     $tutorial->paper,['class'=>'form-control','id'=>'subject']) !!}
             </div>
         </div>
-
 
         <div class="col-md-12 py-3  mt-3 mb-3" style="border-bottom: 5px solid red; ">
             {!! Form::label('syllabus_module', 'Syllabus Module', ['class'=>'labels text-center']) !!}
@@ -217,7 +213,8 @@
                 });
             })
 //set default value for syllabus topic
-            $.ajax({
+
+          $.ajax({
               type: "get",
               url: "/syllabus_module_topics/"+$("#subject").val()+"/"+$("#syllabus_module").val(), 
               success: function (response) {

@@ -89,9 +89,7 @@
             <div class="form-group col-md-12 input-div">
                 {!! Form::label('paper', 'Select Paper', ['class'=>'labels-center']) !!}
 
-                {!! Form::select('paper', ['eco'=>'Economics','acct'=>'Accounting',
-                    'bc'=>'Business Communication','om'=>'Organizational Management',
-                    'law'=>'Law & Practice of Banking', 'mkt'=>"Marketing"],
+                {!! Form::select('paper',BackendHelper::get_form_subject_array(),
                     true,['class'=>'form-control','id'=>'subject']) !!}
             </div>
         </div>

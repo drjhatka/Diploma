@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Database\Factories\Models\TutorialFactory;
 
 class Tutorial extends Model
 {
@@ -23,6 +24,11 @@ class Tutorial extends Model
     public function resources(){
         return $this->morphMany(Resource::class,'resourceable');
         
+    }
+
+    protected static function newFactory()
+    {
+        return TutorialFactory::new();
     }
 
 

@@ -114,11 +114,13 @@ class BackendController extends Controller
             $tutorial->paper = $request->paper;
 
         //update syllabus & delete previous association
-            $tutorial->syllabus()->detach();
+            $tutorial->syllabus()->dissociate();
             $syllabus = Syllabus::find($request->syllabus_module_topic);
         //associate new syllabus topic (even if it has NOT been changed)
             $tutorial->syllabus()->associate($syllabus);
         
+            $tutorial->save();
+
         //delete previous image relationships for content images
             $tutorial->images()->delete();
         //add new images relationship to this tutorial

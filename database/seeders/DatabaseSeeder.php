@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Syllabus;
-use Database\Factories\Models\SyllabusFactory;
+use App\Models\Image;
+
+use Illuminate\Database\Seeder;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -17,5 +19,17 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
          //\App\Models\Syllabus::factory()->create();
          $this->call(SyllabusTableSeeder::class);
+
+    //
+         \App\Models\Tutorial::factory(10)->create()->each(function($tutorial){            
+             $tutorial->images()->save(
+                 Image::factory()->make([
+                    'imageable_id'=>$tutorial->id,
+                    'imageable_type'=>Image::class
+                 ])
+             );
+
+         });
+
     }
 }
