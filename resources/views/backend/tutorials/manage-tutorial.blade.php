@@ -15,6 +15,9 @@
                     <th>Serial</th>
                     <th>Title</th>
                     <th>Short Description</th>
+                    <th>Subject</th>
+                    <th>Module</th>
+                    <th>Syllabus Topic</th>
                     <th colspan="3" class="text-center">Action</th>
                 </tr>
             </thead>
@@ -24,6 +27,9 @@
                                 <td scope="row"> {{ $tutorial->id }}</td>
                                 <td>{{ $tutorial->title }}</td>
                                 <td>@php echo substr($tutorial->short_description,0,200); @endphp.....</td>
+                                <td>{{  $tutorial->syllabus->subject}}</td>
+                                <td>{{  $tutorial->syllabus->module}}</td>
+                                <td>{{  $tutorial->syllabus->topic}}</td>
                                 <td><a href="{{ route('view.tutorial',$tutorial->id) }}" class="btn btn-default"><span class="badge badge-pill badge-success py-2 px-2">View</span></a></td>
                                 <td><a href="{{ route('edit.tutorial',$tutorial->id) }}" class="btn btn-default"><span class="badge badge-pill badge-warning py-2 px-2">Edit</span></a></td>
                                 <td><a href="{{ route('delete.tutorial',$tutorial->id) }}" class="btn btn-default"><span class="badge badge-pill badge-danger py-2 px-2">Delete</span></a></td>
